@@ -21,15 +21,18 @@ async function addWish(e) {
   });
 
   const commentData = { name, message, attendance, time };
-  const { error } = await supabase.from("comments").insert([commentData]);
+
+  const { error } = await supabase
+    .from("comments")
+    .insert([commentData]);
 
   if (error) {
-    console.error(error);
-    alert("Ucapan gagal dikirim, silakan coba lagi 🙏");
+    console.error("Supabase error:", error);
+    alert("Ucapan gagal dikirim 🙏");
     return;
   }
 
-  renderComment(commentData);
+  // ❌ JANGAN render manual (karena realtime)
   e.target.reset();
 }
 supabase
@@ -39,6 +42,6 @@ supabase
     { event: "INSERT", schema: "public", table: "comments" },
     (payload) => {
       renderComment(payload.new);
-    },
+    }
   )
   .subscribe();
