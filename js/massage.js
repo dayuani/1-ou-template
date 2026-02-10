@@ -27,21 +27,50 @@ async function addWish(e) {
     .insert([commentData]);
 
   if (error) {
-    console.error("Supabase error:", error);
+    console.error(error);
     alert("Ucapan gagal dikirim 🙏");
     return;
   }
 
-  // ❌ JANGAN render manual (karena realtime)
+  renderComment(commentData);
   e.target.reset();
 }
-supabase
-  .channel("comments-realtime")
-  .on(
-    "postgres_changes",
-    { event: "INSERT", schema: "public", table: "comments" },
-    (payload) => {
-      renderComment(payload.new);
-    }
-  )
-  .subscribe();
+function renderComment(comment) {
+  const list = document.getElementById("commentList");
+
+  const item = document.createElement("div");
+  item.className =
+    "p-4 rounded-2xl bg-black/60 backdrop-blur-md text-sm text-white grid gap-1";
+
+  item.innerHTML = `
+    <div class="flex justify-between items-center">
+      <span class="font-semibold">${comment.name}</span>
+      <span class="text-xs text-gray-300">${comment.time}</span>
+    </div>
+
+    <p class="text-gray-200">${comment.message}</p>
+
+    <span class="text-xs italic text-gray-400">
+      Kehadiran: ${comment.attendance}
+    </span>
+  `;
+
+  list.prepend(item); // biar yang terbaru di atas
+}
+async function loadComments() {
+  const { data, error } = await db
+    .from("comments")
+    .select("*")
+    .order("id", { ascending: false });
+
+  if (error) {
+    console.error("load error:", error);
+    return;
+  }
+
+  data.forEach(renderComment);
+}
+document.addEventListener("DOMContentLoaded", () => {
+  loadComments();
+});
+
