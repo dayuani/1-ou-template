@@ -170,3 +170,40 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+// Konfigurasi Google Script RSVP
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-R9S8FYPf1vu2qIompUX93v-hOoZrwpNsCHimh2zfo_DrmlpxRA4nARl925cqvfaH/exec";
+const rsvpForm = document.getElementById('rsvpForm');
+const btnRsvp = document.getElementById('btnRsvp');
+
+rsvpForm.addEventListener('submit', e => {
+  e.preventDefault();
+  
+  // Ubah status tombol
+  btnRsvp.disabled = true;
+  btnRsvp.innerHTML = "Mengirim...";
+
+  const formData = new FormData(rsvpForm);
+  const data = {
+    nama: formData.get('nama'),
+    kehadiran: formData.get('kehadiran'),
+    jumlah_tamu: formData.get('jumlah_tamu')
+  };
+
+  // Kirim ke Google Sheets
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify(data),
+  })
+  .then(response => {
+    alert("Terima kasih! Reservasi Anda telah terkirim. 🙏");
+    rsvpForm.reset();
+  })
+  .catch(error => {
+    console.error('Error!', error.message);
+    alert("Maaf, terjadi kesalahan saat mengirim data.");
+  })
+  .finally(() => {
+    btnRsvp.disabled = false;
+    btnRsvp.innerHTML = "Kirim";
+  });
+});

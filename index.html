@@ -385,6 +385,55 @@
   </div>
 </section>
 
+<!-- RSVP -->
+<section id="rsvp" class="relative px-8 py-16 bg-cover bg-center bg-fixed text-white" style="background-image: url('img/img4(2).png');">
+  <div class="absolute inset-0 bg-black/60"></div>
+  
+  <div class="relative z-10 max-w-md mx-auto">
+    <div class="text-center mb-8">
+      <h2 style="font-family: 'Cormorant Garamond', serif;" class="text-4xl font-bold mb-4">RSVP</h2>
+      <p style="font-family: 'DM Sans', sans-serif;" class="text-sm text-gray-200">
+        Untuk membantu kami mempersiapkan segalanya dengan lebih baik, silakan konfirmasi kehadiran Anda melalui formulir RSVP berikut:
+      </p>
+    </div>
+
+    <form id="rsvpForm" class="grid gap-5" style="font-family: 'DM Sans', sans-serif;">
+      <div class="grid gap-2">
+        <label class="text-sm">Nama *</label>
+        <input type="text" name="nama" required class="w-full px-4 py-3 bg-transparent border border-white/40 rounded-lg focus:outline-none focus:border-white">
+      </div>
+
+      <div class="grid gap-2">
+        <label class="text-sm">Kehadiran *</label>
+        <div class="flex flex-col gap-3">
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="radio" name="kehadiran" value="Ya, Saya akan hadir" required class="w-4 h-4 accent-white">
+            <span>Ya, Saya akan hadir</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="radio" name="kehadiran" value="Mohon maaf, Saya berhalangan hadir" class="w-4 h-4 accent-white">
+            <span>Mohon maaf, Saya berhalangan hadir</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="grid gap-2">
+        <label class="text-sm">Jumlah Tamu *</label>
+        <select name="jumlah_tamu" required class="w-full px-4 py-3 bg-black/40 border border-white/40 rounded-lg focus:outline-none appearance-none">
+          <option value="" disabled selected>- Please select -</option>
+          <option value="1">1 Orang</option>
+          <option value="2">2 Orang</option>
+          <option value="Lebih dari 2">Lebih dari 2 Orang</option>
+        </select>
+      </div>
+
+      <button type="submit" id="btnRsvp" class="mt-4 bg-[#8e9167] hover:bg-[#7a7d58] text-white py-3 rounded-full font-semibold transition duration-300 shadow-lg">
+        Kirim
+      </button>
+    </form>
+  </div>
+</section>
+
 <!-- RESEPSI -->
 <section
   class="relative px-8 py-12 bg-cover bg-center bg-fixed"
